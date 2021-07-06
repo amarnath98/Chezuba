@@ -1,0 +1,64 @@
+<div class="tab">
+    <button [ngClass]="{'highlight': state == 'thirds'}" id='0' (click)="setList('thirds')">Thirds</button>
+    <button [ngClass]="{'highlight': state == 'fifths'}" id='1' (click)="setList('fifths')">Fifths</button>
+    <button [ngClass]="{'highlight': state == 'magic'}" id='2' (click)="setList('magic')">Magic</button>
+
+        <div class="x-float-right btnmargin">
+            
+            <button type="button" class="btn btn-light"
+                (click)="enableSearch()" id="btnSearchId" [disabled]="threelist.length==0">
+                <img class="searchimg" id="imgSearchId" tabindex="-1" aria-hidden="true"
+                    [src]="isSearchEnabled?'/assets/search_clear.png':'/assets/search_icon.png'"
+                    [alt]="isSearchEnabled?'Clear Search':'Search'" />{{isSearchEnabled?"Clear Search":" Search"}}
+            </button>
+                <button type="button" class="btn btn-light"
+                (click)="reset()" id="btnResetId" [disabled]="threelist.length==0">
+                <img class="searchimg" id="imgresetId" tabindex="-1" aria-hidden="true"
+                    src="/assets/reset.jpg"
+                    alt="Reset">Reset
+                </button>
+            </div>
+            <div class="x-float-right pd">
+                <input type="text" *ngIf="isSearchEnabled" class="tabletxtbx txtbox"
+                                     placeholder="search by id" (keyup.enter)=search();
+                                    [(ngModel)]="searchterm" aria-label="search"
+                                     />
+        </div>
+</div>
+
+<ngx-spinner
+bdOpacity = 0
+bdColor = "rgba(255, 255, 255, 0.5)"
+ size="medium"
+ color="#696969"
+ type="ball-spin-clockwise" [fullScreen] = "true">
+ <p style="font-size: 20px; color: #333;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" role="alert">Loading...</p>
+</ngx-spinner>
+
+    <table class= "table" border="1" *ngIf="threelist.length!=0">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Body</th>
+                <th>ID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let field of threelist">
+                <td>
+                    <span>{{field.data.title}}</span>
+                </td>
+                <td>
+                    <span>{{field.data.body}}</span>
+                </td>
+                <td><span>{{field.data.id}}</span></td>
+                 <td class="delete">
+                     <button class="btn btn-light action cancel"  (click)="delete(field.id)" title="delete">
+                    <img class="cancelimg imgCancelId" src="/assets/delete.png" alt="delete {{field.id}}" aria-hidden="true"
+                        tabindex="-1" />
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
